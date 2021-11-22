@@ -8,7 +8,7 @@ st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('An application that performs sentiment analysis on course/professor reviews and provides a (+/-) rating and relevant key tags.')
 #st.subheader("Using data from Rate My Professor")
 
-DATA_URL = ('spreadsheet.csv')
+DATA_URL = ('sentiment-analysis/spreadsheet.csv')
 
 @st.cache
 def load_data(nrows):
