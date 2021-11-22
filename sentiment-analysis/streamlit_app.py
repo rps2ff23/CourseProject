@@ -41,7 +41,7 @@ data_load_state.markdown("Data loaded! (using st.cache)")
 st.header('Try it!')
 text = st.text_area('Write review.')
 clicked = st.button('Submit! 👈')
-local_css("style.css")
+local_css("sentiment-analysis/style.css")
  
 # Make predictions
 if text != '' and clicked:
