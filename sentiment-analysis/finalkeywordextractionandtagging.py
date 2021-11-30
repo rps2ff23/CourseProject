@@ -33,19 +33,8 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 from sklearn.preprocessing import MultiLabelBinarizer
-from sklearn.linear_model import LogisticRegression
-
-# Binary Relevance
-from sklearn.multiclass import OneVsRestClassifier
-
-# Performance metric
-from sklearn.metrics import f1_score
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
-
-from sklearn.svm import SVC
-
 from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.naive_bayes import GaussianNB
 
