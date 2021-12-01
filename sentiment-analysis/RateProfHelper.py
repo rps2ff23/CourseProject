@@ -22,7 +22,7 @@ class RateMyProfScraper:
                 temp_list = temp_jsonpage['professors']
                 #temp_add = []
                 for professor in temp_list:
-                    if professor['tNumRatings'] > 50:
+                    if professor['tNumRatings'] > 20:
                         tempprofessorlist.append(professor)
                 #tempprofessorlist.extend(temp_add)
                 i += 1
