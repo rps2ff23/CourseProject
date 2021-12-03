@@ -33,8 +33,17 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 
 from sklearn.preprocessing import MultiLabelBinarizer
+from sklearn.linear_model import LogisticRegression
+
+# Binary Relevance
+from sklearn.multiclass import OneVsRestClassifier
+
+# Performance metric
+from sklearn.metrics import f1_score
+
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
+
 from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.naive_bayes import GaussianNB
 
@@ -46,9 +55,6 @@ import yake
 #Cleanse data for better analysis
 stopwords = set(stopwords.words("english"))
 spell = Speller(lang='en')
-
-multilabel_binarizer = MultiLabelBinarizer()
-tfidf = TfidfVectorizer(max_df=0.8, max_features=10000)
 
 def data_cleanse(line):
 # Removes all special characters and numericals leaving the alphabets
@@ -70,19 +76,87 @@ def data_cleanse(line):
     final = ' '.join(line)
     return final.lower()
 
+def feature_buildtext(line):
+    lineVal = str(line)
+    data = []
+    r.extract_keywords_from_text(lineVal)
+    dataKeys = r.get_ranked_phrases()[:10]
+    print(dataKeys[0])
+    for w in dataKeys[0].split(): 
+      data.append(w)
+      if len(data) != 0:
+        adjective = nltk.pos_tag(data)
+        for nn_val in [item for item in adjective if item[1] == 'NN']:
+          for jj_val in [item for item in adjective if item[1] in ['JJ', 'JJR', 'JJS']]:
+            keyPhrase = jj_val[0] +' '+ nn_val[0];
+            if keyPhrase not in allFeatures_list:
+              allFeatures_list.append(keyPhrase) 
+    return allFeatures_list
+       
+# Key word extraction
+feature_list = []
+
+r = Rake()
 def data_keyword_extract(line):
     lineVal = str(line)
     data = []
     keywordList = []
+    newPhraseList = []
+    normal = 1
+    r.extract_keywords_from_text(lineVal)
+    dataKeys = r.get_ranked_phrases()[:5]
+    if normal == 1:
+      if len(dataKeys) > 0:
+        for w in dataKeys[0].split(" "):
+          data.append(w)
+          if len(data) != 0:
+            adjective = nltk.pos_tag(data)
+            for nn_val in [item for item in adjective if item[1] == 'NN']:
+              for jj_val in [item for item in adjective if item[1] in ['JJ', 'JJR', 'JJS']]:
+                keyPhrase = jj_val[0] +' '+ nn_val[0];
+                if keyPhrase not in newPhraseList:
+                  if keyPhrase in selected_list:
+                    newPhraseList.append(keyPhrase) 
+      kw_extractor = yake.KeywordExtractor(lan="en", n=2, dedupLim=0.1, top=2, features=None)
+      dataKeys = kw_extractor.extract_keywords(lineVal)[:2]
+      for phrs in list(map(lambda x: x[0], dataKeys)):
+        if phrs in selected_list:
+          if phrs not in newPhraseList:
+            newPhraseList.append(phrs)
+    return newPhraseList
+
+def data_keyword_extract_yake(line):
+    lineVal = str(line)
+    data = []
+    keywordList = []
     ######yake
-    kw_extractor = yake.KeywordExtractor(lan="en", n=2, dedupLim=0.9, top=10, features=None)
+    kw_extractor = yake.KeywordExtractor(lan="en", n=2, dedupLim=0.9, top=2, features=None)
     dataKeys = kw_extractor.extract_keywords(lineVal)[:2]
-    #print(dataKeys)
     keywordList = list(map(lambda x: x[0], dataKeys))
     
     return keywordList
-    
-    
+
+def feature_buildtext(line):
+    lineVal = str(line)
+    data = []
+    r.extract_keywords_from_text(lineVal)
+    dataKeys = r.get_ranked_phrases()[:10]
+    #print(dataKeys[0])
+    for w in dataKeys[0].split(): 
+      data.append(w)
+      if len(data) != 0:
+        adjective = nltk.pos_tag(data)
+        for nn_val in [item for item in adjective if item[1] == 'NN']:
+          for jj_val in [item for item in adjective if item[1] in ['JJ', 'JJR', 'JJS']]:
+            keyPhrase = jj_val[0] +' '+ nn_val[0];
+            if keyPhrase not in allFeatures_list:
+              allFeatures_list.append(keyPhrase) 
+    return allFeatures_list
+
+
+multilabel_binarizer = MultiLabelBinarizer()
+tfidf = TfidfVectorizer(tokenizer=feature_buildtext,max_df=0.8, max_features=100000)
+
 def infer_tags(q):
     
     filename = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/sentiment-analysis/finalized_model.sav')
@@ -101,12 +175,13 @@ def infer_tags(q):
     else:
       if not interim[0]:
         result = data_keyword_extract(q)
+        if len(result) == 0:
+          result = data_keyword_extract_yake(q)
       else:
         result = interim
     return result
 
-
 if __name__ == "__main__":
     
-    quest = "great lecturer way teaching highly engaging visual well make system programming fun interesting"
-    print("Original Review Text: ", quest, "\nPredicted keyword: ", infer_tags(quest), "\n")
+    quest = sys.argv[1]
+    return infer_tags(quest)
