@@ -50,6 +50,10 @@ from sklearn.naive_bayes import GaussianNB
 from autocorrect import Speller
 from rake_nltk import Rake
 
+
+from sklearn.externals import joblib
+
+
 import yake
 
 #Cleanse data for better analysis
@@ -154,21 +158,21 @@ def feature_buildtext(line):
     return allFeatures_list
 
 
-multilabel_binarizer = MultiLabelBinarizer()
-tfidf = TfidfVectorizer(tokenizer=feature_buildtext,max_df=0.8, max_features=100000)
+#multilabel_binarizer = MultiLabelBinarizer()
+#tfidf = TfidfVectorizer(tokenizer=feature_buildtext,max_df=0.8, max_features=100000)
 
 def infer_tags(q):
     
     filename = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/sentiment-analysis/finalized_model.sav')
     
     # load the model from disk
-    loaded_model = pickle.load(open(filename, 'rb'))
+    clf, tfidf, multilabel_binarizer = pickle.load(open(filename, 'rb'))
     
     result = []
     interim = []
     q = data_cleanse(q)
     q_vec = tfidf.transform([q])
-    q_pred = loaded_model.predict(q_vec)
+    q_pred = clf.predict(q_vec)
     interim = multilabel_binarizer.inverse_transform(q_pred)
     if len(interim) != 1:
       result = interim

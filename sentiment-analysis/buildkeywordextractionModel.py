@@ -51,6 +51,9 @@ from sklearn.naive_bayes import GaussianNB
 
 from autocorrect import Speller
 from rake_nltk import Rake
+from sklearn import metrics
+
+from sklearn.externals import joblib
 
 import yake             
 #Cleanse data for better analysis
@@ -157,7 +160,7 @@ selected_list = ['useful course', 'useful investment', 'practical course', 'mode
                  'modern thinking','practical course','innovative thinking','good skill','great experience','practical course', 'good morality','great speaker', 
                  'insightful', 'interesting', 'nice learning','technical course', 'low confidence', 'great learning','excellent introductory','excellent lecturer', 
                  'immense knowledge','informed course', 'sincere professor', 'valuable course', 'cool course','terrible course','poorly produced', 'disjointed lecture',
-                 'informative', 'nice', 'useful study', 'good opportunity']
+                 'informative', 'nice', 'useful study', 'good opportunity', 'unwatchable lecture', 'knowledgeable instructor', 'global course', 'beginner overview', 'extraordinary course', 'wonderful experience']
                  
 def freq_words(x, terms = 30):
   all_words = ' '.join([text for text in x])
@@ -328,9 +331,13 @@ def build_model():
     # fit model on train data
     clf.fit(xtrain_tfidf, ytrain)
 
-    # save the model to disk and use this in the final script
-    pickle.dump(clf, open('finalized_model.sav', 'wb'))
+    # save the model and other parameters to disk and use this in the final script
+    pickle.dump([clf, tfidf, multilabel_binarizer] , open('finalized_model.sav', 'wb'))
 
+    
+    #Check accuracy_score
+    print("Accuracy:",metrics.accuracy_score(yval[10], y_pred[10]))
+    print("Accuracy:",metrics.accuracy_score(yval[384], y_pred[384]))
 
 if __name__ == "__main__":
 
