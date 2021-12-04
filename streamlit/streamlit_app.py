@@ -12,8 +12,8 @@ st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
 #st.subheader("Using data from Rate My Professor")
 
-DATA_URL = ('/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/spreadsheet.csv')
-
+#DATA_URL = ('/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/spreadsheet.csv')
+DATA_URL = 'https://github.com/rps2ff23/CourseProject/blob/main/keyword-extract/spreadsheet.csv'
 @st.cache
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
@@ -46,7 +46,8 @@ st.subheader('Find relevant keywords and sentiment!')
 text = st.text_area('Write review here..')
 clicked = st.button('Submit! 👈')
 st.markdown("***")
-local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
+#local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
+local_css("https://github.com/rps2ff23/CourseProject/blob/main/streamlit/style.css")
 url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
 output = 'finalized_model.sav'
 gdown.download(url, output, quiet=False)
