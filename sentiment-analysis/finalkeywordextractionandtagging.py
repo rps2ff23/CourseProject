@@ -50,10 +50,6 @@ from sklearn.naive_bayes import GaussianNB
 from autocorrect import Speller
 from rake_nltk import Rake
 
-
-from sklearn.externals import joblib
-
-
 import yake
 
 #Cleanse data for better analysis
@@ -81,6 +77,7 @@ def data_cleanse(line):
     return final.lower()
 
 def feature_buildtext(line):
+    allFeatures_list = []
     lineVal = str(line)
     data = []
     r.extract_keywords_from_text(lineVal)

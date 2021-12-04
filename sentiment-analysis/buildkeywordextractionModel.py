@@ -53,8 +53,6 @@ from autocorrect import Speller
 from rake_nltk import Rake
 from sklearn import metrics
 
-from sklearn.externals import joblib
-
 import yake             
 #Cleanse data for better analysis
 stopwords = set(stopwords.words("english"))
@@ -198,7 +196,6 @@ def select_columns(data_frame, column_names):
     return new_frame
 
 def feature_buildtext(line):
-    
     allFeatures_list = []
     lineVal = str(line)
     data = []
