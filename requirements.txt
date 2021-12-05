@@ -3,16 +3,13 @@ wordcloud
 nltk
 numpy
 pandas
-csv
-string
 spacy
 tqdm
-time
 pickle
 tensorflow
 tensorflow_hub
 sklearn
-skmultilearn.problem_transform
+skmultilearn
 autocorrect
 rake_nltk
 yake
