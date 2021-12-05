@@ -19,8 +19,8 @@ def load_data(nrows):
     return data.sample(20)
 
 @st.cache
-def load_model():
-    url="https://drive.google.com/uc?id={}".format(st.secrets["gdrive_model_id"])
+def load_model(fileid):
+    url="https://drive.google.com/uc?id={}".format()
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
 
@@ -38,7 +38,7 @@ def formatkeywords(words):
 
 data_load_state = st.markdown('Loading data...')
 data = load_data(10000)
-load_model()
+load_model(st.secrets["gdrive_model_id"])
 data_load_state.markdown("Reviews loaded! (using st.cache)")
 
 st.subheader('Check some sample reviews..')
