@@ -9,9 +9,7 @@ from keyword_extract.finalkeywordextractionandtagging import infer_tags, feature
 
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
-#st.subheader("Using data from Rate My Professor")
 
-#DATA_URL = ('/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/spreadsheet.csv')
 DATA_URL = 'keyword_extract/spreadsheet.csv'
 @st.cache
 def load_data(nrows):
@@ -22,7 +20,7 @@ def load_data(nrows):
 
 @st.cache
 def load_model():
-    url="https://drive.google.com/uc?id={}".format("1qq33DP24coJYm35TGpKJSa4dweB-0aSw")
+    url="https://drive.google.com/uc?id={}".format(st.secrets["gdrive_model_id"])
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
 
@@ -52,7 +50,6 @@ st.subheader('Find relevant keywords and sentiment!')
 text = st.text_area('Write review here..')
 clicked = st.button('Submit! 👈')
 st.markdown("***")
-#local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
 local_css("streamlit/style.css")
 #url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
 
@@ -63,7 +60,6 @@ if text != '' and clicked:
         time.sleep(2)
     st.subheader('These are the keywords relevant to review..')
     
-    #keywords = keywordtagging.infer_tags(text, '/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/finalized_model.sav')
     keywords = infer_tags(text, '/app/courseproject/finalized_model.sav')
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
