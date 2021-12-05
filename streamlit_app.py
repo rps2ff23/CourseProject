@@ -58,7 +58,8 @@ if text != '' and clicked:
     st.subheader('These are the keywords relevant to review..')
     
     #keywords = keywordtagging.infer_tags(text, '/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/finalized_model.sav')
-    #st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
+    keywords = keywordtagging.infer_tags(text, '/app/courseproject/finalized_model.sav')
+    st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     st.subheader('Sentiment Prediction')
     st.success('Positive Sentiment (0.88)')
