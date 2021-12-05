@@ -53,7 +53,7 @@ from rake_nltk import Rake
 
 
 #from sklearn.externals import joblib
-import buildkeywordextractionModel
+from keyword_extract import buildkeywordextractionModel
 
 import yake
 
