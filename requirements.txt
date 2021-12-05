@@ -1,1 +1,19 @@
 gdown
+wordcloud
+nltk
+numpy as np # linear algebra
+pandas as pd 
+re
+csv
+string
+spacy
+tqdm
+time
+pickle
+tensorflow as tf
+tensorflow_hub as hub
+sklearn
+skmultilearn.problem_transform
+autocorrect
+rake_nltk
+yake
