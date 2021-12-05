@@ -51,8 +51,6 @@ text = st.text_area('Write review here..')
 clicked = st.button('Submit! 👈')
 st.markdown("***")
 local_css("streamlit/style.css")
-#url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
-
  
 # Make predictions
 if text != '' and clicked:
