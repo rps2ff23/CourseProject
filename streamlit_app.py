@@ -5,7 +5,7 @@ import time
 import random
 import sys
 import gdown
-from keyword_extract.finalkeywordextractionandtagging import feature_buildtext, infer_tags
+import keyword_extract.finalkeywordextractionandtagging
 
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
@@ -47,9 +47,9 @@ clicked = st.button('Submit! 👈')
 st.markdown("***")
 #local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
 local_css("https://github.com/rps2ff23/CourseProject/blob/main/streamlit/style.css")
-url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
-output = 'finalized_model.sav'
-gdown.download(url, output, quiet=False)
+#url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
+#output = 'finalized_model.sav'
+#gdown.download(url, output, quiet=False)
  
 # Make predictions
 if text != '' and clicked:
