@@ -12,7 +12,7 @@ st.markdown('>An application that performs sentiment analysis on **course/profes
 #st.subheader("Using data from Rate My Professor")
 
 #DATA_URL = ('/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/spreadsheet.csv')
-DATA_URL = 'https://github.com/rps2ff23/CourseProject/blob/main/keyword-extract/spreadsheet.csv'
+DATA_URL = 'keyword_extract/spreadsheet.csv'
 @st.cache
 def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
