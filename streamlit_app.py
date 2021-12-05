@@ -5,7 +5,7 @@ import time
 import random
 import sys
 import gdown
-import keyword_extract.finalkeywordextractionandtagging
+import keyword_extract.finalkeywordextractionandtagging as keywordtagging
 
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
@@ -46,7 +46,7 @@ text = st.text_area('Write review here..')
 clicked = st.button('Submit! 👈')
 st.markdown("***")
 #local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
-local_css("https://github.com/rps2ff23/CourseProject/blob/main/streamlit/style.css")
+local_css("streamlit/style.css")
 #url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
 #output = 'finalized_model.sav'
 #gdown.download(url, output, quiet=False)
@@ -57,8 +57,8 @@ if text != '' and clicked:
         time.sleep(2)
     st.subheader('These are the keywords relevant to review..')
     
-    keywords = infer_tags(text, '/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/finalized_model.sav')
-    st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
+    #keywords = keywordtagging.infer_tags(text, '/Users/riyasimon/Documents/UIUC/CS410/project/code/keyword-extract/finalized_model.sav')
+    #st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     st.subheader('Sentiment Prediction')
     st.success('Positive Sentiment (0.88)')
