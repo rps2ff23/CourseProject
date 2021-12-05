@@ -217,7 +217,7 @@ def feature_buildtext(line):
     return allFeatures_list
 
 # import spaCy's language model
-nlp = spacy.load('en')
+nlp = spacy.load('en_core_web_sm')
 multilabel_binarizer = MultiLabelBinarizer()
 tfidf = TfidfVectorizer(tokenizer=feature_buildtext,max_df=0.8, max_features=100000)
 r = Rake()
