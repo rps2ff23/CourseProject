@@ -20,7 +20,7 @@ def load_data(nrows):
 
 @st.cache
 def load_model(fileid):
-    url="https://drive.google.com/uc?id={}".format()
+    url="https://drive.google.com/uc?id={}".format(fileid)
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
 
