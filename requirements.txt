@@ -7,8 +7,8 @@ spacy
 tqdm
 tensorflow
 tensorflow_hub
-sklearn
-skmultilearn
+scikit-learn
+scikit-multilearn
 autocorrect
 rake_nltk
 yake
