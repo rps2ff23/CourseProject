@@ -47,7 +47,8 @@ clicked = st.button('Submit! 👈')
 st.markdown("***")
 #local_css("/Users/riyasimon/Documents/UIUC/CS410/project/code/streamlit/style.css")
 local_css("streamlit/style.css")
-url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
+#url = 'https://drive.google.com/file/d/1qq33DP24coJYm35TGpKJSa4dweB-0aSw/view?usp=sharing'
+url="https://drive.google.com/uc?id={}".format("1qq33DP24coJYm35TGpKJSa4dweB-0aSw")
 output = 'finalized_model.sav'
 gdown.download(url, output, quiet=False)
  
