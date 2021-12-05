@@ -5,8 +5,7 @@ import time
 import random
 import sys
 import gdown
-sys.path.append('../../code/keyword-extract')
-from finalkeywordextractionandtagging import feature_buildtext, infer_tags
+from keyword_extract.finalkeywordextractionandtagging import feature_buildtext, infer_tags
 
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
