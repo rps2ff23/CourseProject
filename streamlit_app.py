@@ -6,7 +6,7 @@ import random
 import sys
 import gdown
 from keyword_extract.finalkeywordextractionandtagging import infer_tags, feature_buildtext
-
+from sentiment_analysis.sentimentanalysis import main
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
 
@@ -19,10 +19,12 @@ def load_data(nrows):
     return data.sample(20)
 
 @st.cache
-def load_model(fileid):
+def load_model(fileid, sentiment_fileid):
     url="https://drive.google.com/uc?id={}".format(fileid)
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
+    sentiment_url="https://drive.google.com/uc?id={}".format(sentiment_fileid)
+    sentiment_output = 'saved_model_sentiment'
 
 def local_css(file_name):
     with open(file_name) as f:
@@ -38,7 +40,7 @@ def formatkeywords(words):
 
 data_load_state = st.markdown('Loading data...')
 data = load_data(10000)
-load_model(st.secrets["gdrive_model_id"])
+load_model(st.secrets["gdrive_model_id"], st.secrets["gdrive_sentiment_model_id"])
 data_load_state.markdown("Reviews loaded! (using st.cache)")
 
 st.subheader('Check some sample reviews..')
@@ -62,6 +64,7 @@ if text != '' and clicked:
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     st.subheader('Sentiment Prediction')
+    sentiment_prediction = main("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
     st.success('Positive Sentiment (0.88)')
 elif text == '' and clicked:
     st.error('No input text')
