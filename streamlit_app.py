@@ -64,8 +64,8 @@ if text != '' and clicked:
     keywords = infer_tags(text, '/app/courseproject/finalized_model.sav')
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
-    st.subheader('Sentiment Prediction')
+    st.subheader('Sentiment Prediction is ')
     sentiment_prediction = main("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
-    st.success(sentiment_prediction)
+    st.markdown('###Sentiment Prediction is **' + sentiment_prediction + '**')
 elif text == '' and clicked:
     st.error('No input text')
