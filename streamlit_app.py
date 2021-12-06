@@ -69,6 +69,7 @@ if text != '' and clicked:
     sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
     st.markdown('### Sentiment Prediction is **' + sentiment_prediction + '**')
     st.markdown("***")
+    st.subheader('These are the tags that made the most sense for this review..')
     sentimenttags = sentiment_tags(text)
     st.markdown(formatkeywords(sentimenttags), unsafe_allow_html=True)
 elif text == '' and clicked:
