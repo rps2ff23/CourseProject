@@ -25,6 +25,7 @@ def load_model(fileid, sentiment_fileid):
     gdown.download(url, output, quiet=False)
     sentiment_url="https://drive.google.com/uc?id={}".format(sentiment_fileid)
     sentiment_output = 'saved_model_sentiment'
+    gdown.download(sentiment_url, sentiment_output, quiet=False)
 
 def local_css(file_name):
     with open(file_name) as f:
@@ -65,6 +66,6 @@ if text != '' and clicked:
     st.markdown("***")
     st.subheader('Sentiment Prediction')
     sentiment_prediction = main("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
-    st.success('Positive Sentiment (0.88)')
+    st.success(sentiment_prediction)
 elif text == '' and clicked:
     st.error('No input text')
