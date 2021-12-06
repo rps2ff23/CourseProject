@@ -154,6 +154,13 @@ def predict(model, tokenizer, input):
   return labels[np.argmax(pred)]
 
 def main(input_file, input, model_file):
+
+  sample_args = input
+  sample_data = ''
+  for i in sample_args:
+      sample_data += i + ' '
+  sample_data = sample_data[0:len(sample_data)-1]
+
   sentiment_data = read_file(input_file)
 
   tokenizer, X_train, X_test, y1_train, y1_test, y2_train, y2_test, y3_train, y3_test, y4_train, y4_test = create_dataset(sentiment_data)
@@ -169,7 +176,7 @@ def main(input_file, input, model_file):
     evaluate_model(model, X_test, y1_test, y2_test, y3_test, y4_test)
     save_sentiment_model(model)
 
-  return predict(model, tokenizer, input)
+  return predict(model, tokenizer, [sample_data])
 
 if __name__ == "__main__":
   import sys
