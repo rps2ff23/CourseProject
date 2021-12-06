@@ -6,7 +6,8 @@ import random
 import sys
 import gdown
 from keyword_extract.finalkeywordextractionandtagging import infer_tags, feature_buildtext
-from sentiment_analysis.sentimentanalysis import main
+from sentiment_analysis.sentimentanalysis import main as sentiment_rating
+from sentiment_analysis.aspectlabels import main as sentiment_tags
 st.markdown('# CS410 Project: Course Review Sentiment Tagging :sparkles:')
 st.markdown('>An application that performs sentiment analysis on **course/professor reviews** and provides a (+/-) rating and relevant key tags.')
 
@@ -65,7 +66,10 @@ if text != '' and clicked:
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     #st.subheader('Sentiment Prediction is ')
-    sentiment_prediction = main("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
-    st.markdown('## Sentiment Prediction is **' + sentiment_prediction + '**')
+    sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
+    st.markdown('### Sentiment Prediction is **' + sentiment_prediction + '**')
+    st.markdown("***")
+    sentimenttags = sentiment_tags(text)
+    st.markdown(formatkeywords(sentimenttags), unsafe_allow_html=True)
 elif text == '' and clicked:
     st.error('No input text')
