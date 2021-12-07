@@ -1,8 +1,16 @@
-import string
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import CountVectorizer
-import numpy as np
+import pandas as pd
 import re
+
+
+labels = ["do not skip class", 'get ready to read', 'hilarious',
+       'gives good feedback', 'respected', 'amazing lectures',
+       'tough grader', 'inspirational', 'clear grading criteria',
+       'lots of homework', 'graded by few things', 'test heavy',
+       'accessible outside class', 'group projects', 'caring',
+       'lecture heavy', 'participation matters', 'beware of pop quizzes',
+       'extra credit', 'so many papers', 'tests are tough']
 
 def preprocess_comments(comment):
     # Remove punctuations and numbers
@@ -14,35 +22,42 @@ def preprocess_comments(comment):
     # Removing multiple spaces
     sentence = re.sub(r'\s+', ' ', sentence)
 
-    return sentence
+    return sentence.lower()
+
+
+def create_dataframe(matrix, tokens):
+    doc_names = [f'doc_{i+1}' for i, _ in enumerate(matrix)]
+    df = pd.DataFrame(data=matrix, index=doc_names, columns=tokens)
+    return(df)
 
 def main(input):
-    labels = ["don't skip class", 'get ready to read', 'hilarious',
-       'gives good feedback', 'respected', 'amazing lectures',
-       'tough grader', 'inspirational', 'clear grading criteria',
-       'lots of homework', 'graded by few things', 'test heavy',
-       'accessible outside class', 'group projects', 'caring',
-       'lecture heavy', 'participation matters', 'beware of pop quizzes',
-       'extra credit', 'so many papers', 'tests are tough']
+    input = input.split('.')
+    input = [preprocess_comments(i) for i in input]
 
-    input = preprocess_comments(input)
-    labels.append(input)
-    vectorizer = CountVectorizer().fit_transform(labels)
-    vectors = vectorizer.toarray()
-    csim = []
-    for i in range(len(labels) - 1):
-        csim.append(cosine_similarity(vectors[-1].reshape(1, -1), vectors[i].reshape(1, -1))[0][0])
-    csim = np.array(csim)
-    idx = np.argpartition(csim, -3)[-3:]
-    print([labels[i] + " " for i in idx])
-    return [labels[i] + " " for i in idx]
+    tags = set()
+    for l in labels:
+      for i in input:
+        data = [l, i]
+        
+        labels_vect = TfidfVectorizer() 
+        vector_matrix = labels_vect.fit_transform(data)
+        cosine_similarity_matrix = cosine_similarity(vector_matrix)
+        df = create_dataframe(cosine_similarity_matrix,['labels','input'])
+
+        if df['labels']['doc_2'] != 0:
+          tags.add((l, df['labels']['doc_2']))
+
+    sorted_tags = sorted(tags, key=lambda x: x[1], reverse=True)[0:3]
+    return [x[0] for x in sorted_tags]
 
 if __name__ == "__main__":
     import sys
 
     sample_args = sys.argv[1:]
     sample_data = ''
+
     for i in sample_args:
         sample_data += i + ' '
+
     sample_data = sample_data[0:len(sample_data)-1]
-    main(sample_data)
+    print(main(sample_data))
