@@ -2,6 +2,10 @@
 
 An application that performs sentiment analysis on course/professor reviews and provides a (+/-) rating and relevant key tags.
 
+### Application 
+
+https://share.streamlit.io/rps2ff23/courseproject/main
+
 ### How to use
 
 1. Enter review text. 
