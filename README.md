@@ -4,7 +4,7 @@ An application that performs sentiment analysis on course/professor reviews and 
 
 ### How to use
 
-
+https://user-images.githubusercontent.com/26610573/145153135-8d846f01-ea24-4165-b9a4-e01212dbce98.mov
 
 ### File Structure
 
