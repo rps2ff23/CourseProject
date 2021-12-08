@@ -32,34 +32,30 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 
+# Binary Relevance
+from skmultilearn.problem_transform import BinaryRelevance
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.linear_model import LogisticRegression
-
-# Binary Relevance
 from sklearn.multiclass import OneVsRestClassifier
-
-# Performance metric
-from sklearn.metrics import f1_score
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
-from sklearn.svm import SVC
-
-from skmultilearn.problem_transform import BinaryRelevance
-from sklearn.naive_bayes import GaussianNB
-
 from autocorrect import Speller
+
+# Feature extraction mechanisms utilized
 from rake_nltk import Rake
+import yake            
+
+# Performance metric
 from sklearn import metrics
 
-#from sklearn.externals import joblib
-
-import yake             
+ 
 #Cleanse data for better analysis
 stopwords = set(stopwords.words("english"))
 spell = Speller(lang='en')
 
+#Preferred feature list
 selected_list = ['useful course', 'useful investment', 'practical course', 'modern course', 'innovative course','great course', 'great learn', 'basic course', 'basic learn', 'basic learning', 'helpful course', 
                  'deep course', 'helpful insight', 'deep insight', 'respected','lots of homework','participation matters', 'inspirational course', 'test heavy', 'group projects', 'clear grading', 'amazing lectures', 
                  'lecture heavy', 'extra credit', 'tough grader', 'theory intensive', 'practical knowledge','helpful knowledge', 'deep knowledge','intelligent professor','intelligent explanation', 'practical teach',
@@ -193,10 +189,12 @@ def data_cleanse(line):
     final = ' '.join(line)
     return final.lower()
 
+# Simple data transform for data column selection
 def select_columns(data_frame, column_names):
     new_frame = data_frame.loc[:, column_names]
     return new_frame
 
+#Custom tokenizer function for TF_IDF feature building
 def feature_buildtext(line):
     
     allFeatures_list = []
@@ -231,7 +229,7 @@ def lem(line):
       mwords.append(line)
     return ' '.join(mwords)
 
-
+# Default keyword extraction function for build
 def data_keyword_extract(line):
     lineVal = str(line)
     data = []
@@ -260,6 +258,7 @@ def data_keyword_extract(line):
             newPhraseList.append(phrs)
     return newPhraseList
 
+#Yake based keyword extract
 def data_keyword_extract_yake(line):
     lineVal = str(line)
     data = []
@@ -270,16 +269,17 @@ def data_keyword_extract_yake(line):
     keywordList = list(map(lambda x: x[0], dataKeys))
     
     return keywordList
-   
+
+# Data set-up and model build
 def build_model():
-    url_data = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/sentiment-analysis/Coursera_reviews_subset.csv')
+    url_data = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/keyword_extract/Coursera_reviews_subset.csv')
     
     coursedata_train = pd.read_csv(url_data, engine='python', error_bad_lines=False).dropna()
     coursedata_train = coursedata_train.drop_duplicates(subset = ['reviews', "course_id"])
 
     #print(coursedata_train.columns.tolist())
 
-    url_data = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/sentiment-analysis/spreadsheet.csv')
+    url_data = (r'https://raw.githubusercontent.com/rps2ff23/CourseProject/main/keyword_extract/spreadsheet.csv')
     proffessordata_train = pd.read_csv(url_data, engine='python',header='infer',error_bad_lines=False).dropna()
     proffessordata_train = proffessordata_train.drop_duplicates(subset = ['comment'])
     #print(proffessordata_train.columns.tolist())
@@ -328,12 +328,12 @@ def build_model():
 
     lr = LogisticRegression()
     clf = OneVsRestClassifier(lr)
+    
     # fit model on train data
     clf.fit(xtrain_tfidf, ytrain)
 
     # save the model and other parameters to disk and use this in the final script
     pickle.dump([clf, tfidf, multilabel_binarizer] , open('finalized_model.sav', 'wb'))
-
     
     #Check accuracy_score
     print("Accuracy:",metrics.accuracy_score(yval[10], y_pred[10]))
