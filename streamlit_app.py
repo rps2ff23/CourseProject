@@ -17,7 +17,7 @@ def load_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows)
     lowercase = lambda x: str(x).lower()
     data.rename(lowercase, axis='columns', inplace=True)
-    return data.sample(20)
+    return data
 
 @st.cache
 def load_model(fileid, sentiment_fileid):
@@ -48,7 +48,7 @@ data_load_state.markdown("Reviews loaded! (using st.cache)")
 st.subheader('Check some sample reviews..')
 if st.checkbox('Show subset of raw data'):
     st.subheader('Raw data')
-    st.dataframe(data)
+    st.dataframe(data.sample(20))
 
 st.subheader('Find relevant keywords and sentiment!')
 text = st.text_area('Write review here..')
