@@ -46,7 +46,7 @@ load_model(st.secrets["gdrive_model_id"], st.secrets["gdrive_sentiment_model_id"
 data_load_state.markdown("Reviews loaded! (using st.cache)")
 
 st.subheader('Check some sample reviews..')
-if st.checkbox('Show subset of raw data'):
+if st.button('Show subset of raw data'):
     st.subheader('Raw data')
     st.dataframe(data.sample(20))
 
