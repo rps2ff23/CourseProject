@@ -31,7 +31,7 @@ from numpy import array
 from numpy import asarray
 from numpy import zeros
 
-from tensorflow.keras.models import Sequential, save_model, load_model
+from keras.models import Sequential, save_model, load_model
 import matplotlib.pyplot as plt
 
 def read_file(input_file):
@@ -212,7 +212,8 @@ if __name__ == "__main__":
   sample_data1 = "Poorly structured and clearly not thought through or designed for the online format "
   sample_data2 = "Angrave is a great professor. He definitely does his best to keep the class interesting, and he does a great job of it. The MPs are helpful and the tests are fair. Overall, its a very easy class if you have prior programming experience, but definitely doable even if you don't. Very nice, funny, and intelligent professor."
   sample_data3 = "I have learned some good points about financial markets, some aspects of how corporation works and how they are governed, as well as different types of corporations were very interesting. i was also surprised how much i knew already, without having any kind of finance background. I guess it's four stars cause i was expecting more maths and statistics and there is very little of that( just in the beginning) it is still very interesting though. As a science graduate i was surprised that same formulas used in statistics in biology, can be applied to the financial markets. The course if worth a try especially  for beginners in financial markets but also I would make essential for general public, to broaden their knowledge about finances. I also wish there was one or two more peer reviewed assignments. I think it was great to read other people work as views have differed so much! Also the peer review should have few more options for scoring points. but other than that it was a really interesting. Very good opportunity to get into civilised debate. "
-  main(input_file, [sample_data1], "saved_model")
+  #main(input_file, [sample_data1], "./saved_model")
+  #main(input_file, [sample_data1], "saved_model")
   main(input_file, [sample_data2], "saved_model")
-  main(input_file, [sample_data3], "saved_model")
+  #main(input_file, [sample_data3], "saved_model")
 
