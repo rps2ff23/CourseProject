@@ -5,7 +5,7 @@ numpy
 pandas
 spacy
 tqdm
-tensorflow-cpu
+tensorflow-mkl
 tensorflow_hub
 scikit-learn
 scikit-multilearn
