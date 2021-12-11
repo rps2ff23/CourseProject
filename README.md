@@ -15,7 +15,7 @@ https://share.streamlit.io/rps2ff23/courseproject/main
 1. Enter review text. 
 2. Click submit!
 3. Fetch results
-    - Keywords: relevant keywords found in review
+    - Keywords: relevant keywords found in review text (Trained based on RateMyProfessor and Kaggle's Coursera review datasets)
     - Sentiment: one of (strongly negative, negative, positive, strongly positive)
     - Tags: predicted tags for the review, these tags are what are available to select in RateMyProfessor
 
