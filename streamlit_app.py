@@ -25,7 +25,7 @@ def load_model(fileid, sentiment_fileid):
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
     sentiment_url="https://drive.google.com/uc?id={}".format(sentiment_fileid)
-    sentiment_output = 'saved_model_sentiment'
+    sentiment_output = 'saved_model'
     gdown.download(sentiment_url, sentiment_output, quiet=False)
 
 def local_css(file_name):
@@ -66,7 +66,7 @@ if text != '' and clicked:
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     #st.subheader('Sentiment Prediction is ')
-    sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model_sentiment')
+    sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model')
     st.markdown('### Sentiment Prediction is **' + sentiment_prediction + '**')
     st.markdown("***")
     st.subheader('These are the tags that made the most sense for this review..')
