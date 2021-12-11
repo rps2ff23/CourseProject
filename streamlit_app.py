@@ -24,9 +24,10 @@ def load_model(fileid, sentiment_fileid):
     url="https://drive.google.com/uc?id={}".format(fileid)
     output = 'finalized_model.sav'
     gdown.download(url, output, quiet=False)
-    sentiment_url="https://drive.google.com/uc?id={}".format(sentiment_fileid)
+    sentiment_url="'https://drive.google.com/drive/u/1/folders/{id}'".format(sentiment_fileid)
     sentiment_output = 'saved_model'
-    gdown.download(sentiment_url, sentiment_output, quiet=False)
+    #gdown.download(sentiment_url, sentiment_output, quiet=False)
+    gdown.download_folder(sentiment_url, sentiment_output, quiet=False)
 
 def local_css(file_name):
     with open(file_name) as f:
