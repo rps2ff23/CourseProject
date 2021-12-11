@@ -27,7 +27,7 @@ def load_model(fileid, sentiment_fileid):
     sentiment_url="https://drive.google.com/drive/u/1/folders/{}".format(sentiment_fileid)
     sentiment_output = 'saved_model'
     #gdown.download(sentiment_url, sentiment_output, quiet=False)
-    gdown.download_folder(sentiment_url, sentiment_output, quiet=False)
+    gdown.download_folder(sentiment_url, quiet=False)
 
 def local_css(file_name):
     with open(file_name) as f:
