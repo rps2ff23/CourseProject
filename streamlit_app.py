@@ -67,7 +67,7 @@ if text != '' and clicked:
     st.markdown(formatkeywords(keywords), unsafe_allow_html=True)
     st.markdown("***")
     #st.subheader('Sentiment Prediction is ')
-    sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", text, '/app/courseproject/saved_model')
+    sentiment_prediction = sentiment_rating("sentiment_analysis/reviewsABSA.csv", [text], '/app/courseproject/saved_model')
     print(sentiment_prediction)
     st.markdown('### Sentiment Prediction is **' + sentiment_prediction + '**')
     st.markdown("***")
